@@ -1,0 +1,24 @@
+import seaborn as sns
+df= sns.load_dataset('titanic')
+
+df
+
+sns.jointplot(x='age',y='fare',data=df)
+
+sns.jointplot(x='age',y='fare',data=df,hue='survived')
+
+sns.jointplot(x='age',y='fare',data=df,hue='class')
+
+sns.pairplot(df,hue='sex')
+
+sns.countplot(x=df['sex'])
+
+sns.countplot(x=df['class'])
+
+sns.barplot(x='sex',y='survived',data=df)
+
+sns.barplot(x='sex',y='survived',hue='class',data=df)
+
+sns.histplot(df['fare'])
+
+sns.kdeplot(df['fare'])

@@ -1,0 +1,338 @@
+#1
+import pandas as pd
+import numpy as np
+
+data = {
+ "Name": ["Amit", "Priya", "Raj", "Sneha", "Vikram", "Ananya", "Rohan"],
+ "Gender": ["Male", "Female", "Male", "Female", "Male", "Female", "Male"],
+ "Marks": [85, 80, 78, 'Nan', 76, 82, 'Nan'],
+ "Age": [20,21,22,23,24,25,26]
+ }
+df = pd.DataFrame(data)
+print(df)
+
+#df.mean()
+
+cat=[]
+con=[]
+for i in df.columns:
+    if(df[i].dtypes=="object"):
+        cat.append(i)
+    else:
+        con.append(i)
+df
+
+cat
+
+con
+
+c=avg=sum=0
+for ele in df['Marks']:
+    if str(ele).isnumeric():
+        c+=1
+        sum+=ele
+if c>0:
+    avg=sum/c
+df=df.replace(to_replace='Nan', value=avg)
+df  
+
+df.isna().sum().plot(kind="bar")
+
+df['Gender']=df['Gender'].map({'Male':0,'Female':1,}).astype(int)
+df
+
+df=df[df['Marks']>80]
+df
+
+df=df.drop(['Age'], axis=1)
+df
+
+data1 = {
+ "Name": ["Amit", "Priya", "Raj", "Sneha", "Vikram", "Ananya", "Rohan"],
+ "Gender": ["Male", "Female", "Male", "Female", "Male", "Female", "Male"],
+ "Marks": [85, 80, 78, 'Nan', 76, 82, 'Nan'],
+ "id": [120,121,122,123,124,125,126]
+ }
+df1 = pd.DataFrame(data1)
+print(df1)
+
+data2 = {
+ "Fee":[1000, 100000, 50000, 2000, 500, 70000, 30000],
+ "id": [120,121,122,123,124,125,126]
+ }
+df2 = pd.DataFrame(data2)
+print(df2)
+
+df3 = pd.merge(df1, df2)
+df3
+
+df.loc[0, 'Marks']= 100
+print(df)
+
+df.plot.box()
+
+df.plot.hist()
+
+df['Gender'].plot.hist
+
+
+
+#3
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+df= pd.read_csv('student data.csv')
+df
+
+df['Marks'].mean()
+
+df['Age'].median()
+
+df['Marks'].std()
+
+df.min()
+
+df.max()
+
+np.std(df['Marks'])
+
+gr1 = df.groupby('Class')
+
+te = gr1.get_group('TE')
+te
+
+te.min()
+
+te.max()
+
+gr2 = df.groupby('Age')
+
+gr2.groups
+
+tw = gr2.get_group(20)
+
+tw
+
+
+import seaborn as sns
+
+df = sns.load_dataset('iris')
+
+df
+
+gr = df.groupby('species')
+
+se = gr.get_group('setosa')
+ve = gr.get_group('versicolor')
+vi = gr.get_group('virginica')
+
+se
+
+se.shape
+
+se.describe()
+
+se['sepal_length'].min()
+
+ve
+
+ve.shape
+
+ve.describe()
+
+ve['sepal_length'].min()
+
+vi
+
+vi.shape
+
+vi.describe()
+
+vi['sepal_length'].min()
+
+
+
+
+#4
+import pandas as pd
+
+df = pd.read_csv("HousingData.csv")
+df
+
+df.head(2)
+
+df.info()
+
+df.describe()
+
+df.corr()
+
+X = df[["RM"]]
+Y = df[["MEDV"]]
+
+import seaborn as sns
+sns.scatterplot(x=X.RM, y=Y.MEDV)
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(X,Y,test_size=0.2)
+
+from sklearn.linear_model import LinearRegression
+lm = LinearRegression()
+model = lm.fit(xtrain,ytrain)
+
+b1 = model.coef_
+b1
+
+b0 = model.intercept_
+b0 
+
+from seaborn import regplot
+sns.regplot(x=X, y=Y)
+
+pred = model.predict(xtest)
+
+from sklearn.metrics import mean_absolute_error
+mean_absolute_error(ytest,pred)
+
+from sklearn.metrics import mean_squared_error
+mean_squared_error(ytest,pred)
+
+print(ytest)
+
+print(pred)
+
+
+
+
+
+#5
+import pandas as pd
+
+df = pd.read_csv('Social_Network_Ads.csv')
+
+df
+
+x=df[['Age','EstimatedSalary']]
+y=df['Purchased']
+
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+x_scaled = scaler.fit_transform(x)
+
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x_scaled,y,random_state=0,test_size=0.30);
+
+x_train
+
+y_train
+
+from sklearn.linear_model import LogisticRegression
+
+%pip install seaborn
+
+import seaborn as sns
+sns.countplot(x=y)
+
+y.value_counts()
+
+classifier = LogisticRegression()
+
+classifier.fit(x_train,y_train)
+
+y_pred = classifier.predict(x_test)
+
+y_train.shape
+
+x_train.shape
+
+y_pred
+
+y_test
+
+import matplotlib.pyplot as plt
+
+plt.xlabel('Age')
+plt.ylabel('Salary')
+plt.scatter(x['Age'],x['EstimatedSalary'],c=y)
+
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+x_scaled = scaler.fit_transform(x)
+
+pd.DataFrame(x_scaled).describe()
+
+plt.xlabel('Age')
+plt.ylabel('Salary')
+plt.scatter(x_scaled[:,0],x_scaled[:,1],c=y)
+
+from sklearn.metrics import confusion_matrix
+
+confusion_matrix(y_test,y_pred)
+
+y_test.value_counts()
+
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix
+
+y_pred = classifier.predict(x_test)
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+
+from sklearn.metrics import accuracy_score
+accuracy_score(y_test,y_pred)
+
+from sklearn.metrics import classification_report
+
+print(classification_report(y_test,y_pred))
+
+new1=[[26,34000]]
+new2=[[57,138000]]
+
+classifier.predict(scaler.transform(new1))
+
+classifier.predict(scaler.transform(new2))
+
+
+
+
+
+
+#10
+import seaborn as sns
+
+df =sns.load_dataset('iris')
+df
+
+df.columns
+
+df.info()
+
+df.dtypes
+
+sns.pairplot(df,hue='species')
+
+sns.pairplot(df)
+
+sns.pairplot(df,hue='species',diag_kind='hist')
+
+sns.histplot(df['sepal_length'],kde=True)
+
+sns.histplot(df['sepal_width'],kde=True)
+
+sns.kdeplot(df['sepal_width'])
+
+sns.histplot(df['petal_length'],kde=True)
+
+sns.histplot(df['petal_width'],kde=True)
+
+sns.kdeplot(df['petal_width'])
+
+sns.boxplot(x=df['sepal_length']);
+
+sns.boxplot(x=df['sepal_width']);
+
+sns.boxplot(x=df['petal_length']);
+
+sns.boxplot(x=df['petal_width']);
+

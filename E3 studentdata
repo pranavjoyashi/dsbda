@@ -1,0 +1,72 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+df= pd.read_csv('student data.csv')
+df
+
+df['Marks'].mean()
+
+df['Age'].median()
+
+df['Marks'].std()
+
+df.min()
+
+df.max()
+
+np.std(df['Marks'])
+
+gr1 = df.groupby('Class')
+
+te = gr1.get_group('TE')
+te
+
+te.min()
+
+te.max()
+
+gr2 = df.groupby('Age')
+
+gr2.groups
+
+tw = gr2.get_group(20)
+
+tw
+
+
+import seaborn as sns
+
+df = sns.load_dataset('iris')
+
+df
+
+gr = df.groupby('species')
+
+se = gr.get_group('setosa')
+ve = gr.get_group('versicolor')
+vi = gr.get_group('virginica')
+
+se
+
+se.shape
+
+se.describe()
+
+se['sepal_length'].min()
+
+ve
+
+ve.shape
+
+ve.describe()
+
+ve['sepal_length'].min()
+
+vi
+
+vi.shape
+
+vi.describe()
+
+vi['sepal_length'].min()

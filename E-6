@@ -1,0 +1,57 @@
+import pandas as pd
+
+df = pd.read_csv('IRIS.csv')
+
+df
+
+x=df.drop('species',axis=1)
+y=df['species']
+
+y.value_counts()
+
+from sklearn.model_selection import train_test_split
+
+x_train ,x_test,y_train,y_test=train_test_split(x,y,random_state=0,test_size=0.35)
+
+x_train.shape
+
+x_test.shape
+
+from sklearn.naive_bayes import GaussianNB
+
+clf= GaussianNB()
+
+clf.fit(x_train,y_train)
+
+y_pred=clf.predict(x_test)
+
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score
+
+from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix
+
+confusion_matrix(y_test,y_pred)
+
+import matplotlib
+print(matplotlib.__version__)
+
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot()
+
+accuracy_score(y_test,y_pred)
+
+clf.predict_proba(x_test)
+
+newl=[[4.5,2.9,3.1,0.4]]
+clf.predict(newl)[0]
+
+newl=[[5.5,3.1,1.0,0.8]]
+clf.predict(newl)[0]
+
+newl=[[6.5,3.3,4.9,1.8]]
+clf.predict(newl)[0]
+
+print(classification_report(y_test,y_pred))
